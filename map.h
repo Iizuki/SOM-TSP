@@ -12,6 +12,7 @@ protected:
     std::vector<Point> points;
 public:
     Map();
+    const std::vector<Point> &getPoints() const;
 };
 
 #endif // MAP_H
