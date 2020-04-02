@@ -1,13 +1,15 @@
 #ifndef MAP_H
 #define MAP_H
+#include <vector>
 #include "point.h"
 
 /**
- * @brief The Map class is an abstract class representing a set of 2D points in
+ * @brief The Map class is an abstract class representing a set of 2D points.
  */
 class Map
 {
-    Point points[];
+protected:
+    std::vector<Point> points;
 public:
     Map();
 };

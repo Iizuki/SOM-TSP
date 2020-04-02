@@ -6,6 +6,7 @@ class Cities : public Map
 {
 public:
     Cities();
+    void Initialize(int numberOfCities);
 };
 
 #endif // CITIES_H
