@@ -48,16 +48,6 @@
           <string>Map</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="cities_label">
-            <property name="text">
-             <string>Cities</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QSpinBox" name="cities_spinBox">
             <property name="minimum">
@@ -68,6 +58,16 @@
             </property>
             <property name="value">
              <number>100</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="cities_label">
+            <property name="text">
+             <string>Cities</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -232,5 +232,25 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>generateMap_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TspSom</receiver>
+   <slot>generateMapClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>142</x>
+     <y>676</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>generateMapClicked()</slot>
+ </slots>
 </ui>

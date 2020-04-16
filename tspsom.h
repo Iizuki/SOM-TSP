@@ -16,6 +16,12 @@ public:
     TspSom(QWidget *parent = nullptr);
     ~TspSom();
 
+public slots:
+
+
+private slots:
+    void generateMapClicked();
+
 private:
     Ui::TspSom *ui;
     Cities citiesMap;
