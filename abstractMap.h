@@ -11,6 +11,7 @@ class AbstractMap
 {
 protected:
     std::vector<Point> points;
+    QVector<double> axisExtractor(bool axis) const;
 public:
     AbstractMap();
     virtual void Initialize(int number) = 0;

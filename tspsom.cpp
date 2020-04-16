@@ -1,5 +1,6 @@
 #include "tspsom.h"
 #include "ui_tspsom.h"
+#include <QVector>
 
 TspSom::TspSom(QWidget *parent)
     : QMainWindow(parent)
@@ -16,7 +17,7 @@ TspSom::TspSom(QWidget *parent)
     ui->graph_qcustomplot->addGraph(); //The som curve
 
     ui->graph_qcustomplot->graph(0)->setLineStyle(QCPGraph::lsNone); //Dots
-    ui->graph_qcustomplot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 4));
+    ui->graph_qcustomplot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 7));
 
 }
 
@@ -26,10 +27,18 @@ TspSom::~TspSom()
 }
 
 
+/**
+ * @brief TspSom::generateMapClicked Qt Slot that handless the "generate map" -button press.
+ * Generates the appropriate amount of cites.
+ */
 void TspSom::generateMapClicked()
 {
     int numberOfCities = ui->cities_spinBox->value();
     citiesMap.Initialize(numberOfCities);
 
-    ui->graph_qcustomplot->graph(0)->setData();
+    QVector<double> x = citiesMap.getXaxis();
+    QVector<double> y = citiesMap.getYaxis();
+
+    ui->graph_qcustomplot->graph(0)->setData(x, y);
+    ui->graph_qcustomplot->replot();
 }

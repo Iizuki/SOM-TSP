@@ -29,3 +29,7 @@ Point::Point(){
     this->x = dist(gen);
     this->y = dist(gen);
 }
+
+//Getters
+double Point::getX(){return x;}
+double Point::getY(){return y;}
