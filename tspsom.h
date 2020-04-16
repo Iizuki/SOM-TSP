@@ -22,6 +22,8 @@ public slots:
 private slots:
     void generateMapClicked();
 
+    void initializeSOM_clicked();
+
 private:
     Ui::TspSom *ui;
     Cities citiesMap;
