@@ -16,16 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abstractMap.cpp \
     cities.cpp \
     main.cpp \
-    map.cpp \
     point.cpp \
     som.cpp \
     tspsom.cpp
 
 HEADERS += \
+    abstractMap.h \
     cities.h \
-    map.h \
     point.h \
     som.h \
     tspsom.h

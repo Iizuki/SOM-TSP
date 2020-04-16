@@ -4,3 +4,7 @@ SOM::SOM()
 {
 
 }
+
+void SOM::Initialize(int numberOfNodes){
+
+}

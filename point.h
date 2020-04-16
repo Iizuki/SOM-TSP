@@ -9,7 +9,11 @@ class Point
     double x;
     double y;
 public:
+    Point(double x, double y);
     Point();
+
+    double getX();
+    double getY();
 };
 
 #endif // POINT_H
