@@ -1,6 +1,5 @@
 #ifndef MAP_H
 #define MAP_H
-#include <vector>
 #include "point.h"
 #include <QVector>
 
@@ -10,14 +9,14 @@
 class AbstractMap
 {
 protected:
-    std::vector<Point> points;
+    QVector<Point> points;
     QVector<double> axisExtractor(bool axis) const;
 public:
     AbstractMap();
     void InitializeRandom(int number);
     virtual QVector<double> getXaxis() const;
     virtual QVector<double> getYaxis() const;
-    const std::vector<Point> &getPoints() const;
+    const QVector<Point> &getPoints() const;
 };
 
 #endif // MAP_H

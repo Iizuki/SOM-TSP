@@ -1,6 +1,7 @@
 #include "point.h"
 #include <stdexcept>
 #include <random>
+#include <cmath>
 
 /**
  * @brief Point::Point Creates a new point with specified coordinates.
@@ -31,5 +32,15 @@ Point::Point(){
 }
 
 //Getters
-double Point::getX(){return x;}
-double Point::getY(){return y;}
+double Point::getX() const {return x;}
+double Point::getY() const {return y;}
+
+
+/**
+ * @brief Point::distance returns the euclidean distance between this and another point
+ * @param anotherPoint
+ * @return
+ */
+double Point::distance(const Point& anotherPoint) const{
+    return sqrt(pow( (x - anotherPoint.getX()), 2) + pow( (y - anotherPoint.getY()), 2));
+}
