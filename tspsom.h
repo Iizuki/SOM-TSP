@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "cities.h"
+#include "som.h"
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TspSom; }
@@ -22,8 +24,12 @@ public slots:
 private slots:
     void generateMapClicked();
 
+    void initializeSOM_clicked();
+
 private:
     Ui::TspSom *ui;
     Cities citiesMap;
+    SOM som;
+    QCPCurve* somCurve;
 };
 #endif // TSPSOM_H

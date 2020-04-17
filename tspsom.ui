@@ -249,8 +249,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>initializeSOM_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TspSom</receiver>
+   <slot>initializeSOM_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>351</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>117</x>
+     <y>662</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>generateMapClicked()</slot>
+  <slot>initializeSOM_clicked()</slot>
  </slots>
 </ui>

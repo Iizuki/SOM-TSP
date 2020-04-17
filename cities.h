@@ -7,7 +7,6 @@ class Cities : public AbstractMap
 
 public:
     Cities();
-    void Initialize(int numberOfCities);
 };
 
 #endif // CITIES_H

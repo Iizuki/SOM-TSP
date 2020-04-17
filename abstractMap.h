@@ -14,9 +14,9 @@ protected:
     QVector<double> axisExtractor(bool axis) const;
 public:
     AbstractMap();
-    virtual void Initialize(int number) = 0;
-    QVector<double> getXaxis() const;
-    QVector<double> getYaxis() const;
+    void InitializeRandom(int number);
+    virtual QVector<double> getXaxis() const;
+    virtual QVector<double> getYaxis() const;
     const std::vector<Point> &getPoints() const;
 };
 
