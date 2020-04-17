@@ -15,8 +15,8 @@ protected:
 public:
     AbstractMap();
     void InitializeRandom(int number);
-    QVector<double> getXaxis() const;
-    QVector<double> getYaxis() const;
+    virtual QVector<double> getXaxis() const;
+    virtual QVector<double> getYaxis() const;
     const std::vector<Point> &getPoints() const;
 };
 
