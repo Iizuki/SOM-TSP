@@ -1,5 +1,6 @@
 #include "som.h"
 #include <cmath>
+#include <QtConcurrent/QtConcurrent>
 
 SOM::SOM()
 {
@@ -48,7 +49,30 @@ QVector<double> SOM::getYaxis() const {
  */
 void SOM::train(const Cities &cities, int iterations){
     for (int i=0; i<iterations; i++){ //one loop iteration is also one training iteration.
+        //Step 1. Obtain a shuffled list of cities
+        QVector<Point> shuffledCities = cities.shuffle();
 
-        //TODO
+        //Step 2. Traverse through all cities
+        for (const Point& city : shuffledCities){
+            //Step 3. Find the closest SOM-node aka the BMU (best matching unit)
+            std::function<DPoint (Point&)> mapper = mapperFactory(city);
+            //REDUCER HERE
+            DPoint BMU = QtConcurrent::blockingMappedReduced();
+
+        }
     }
+}
+
+/**
+ * @brief SOM::mapperFactory genrates a suitable mapping function for MappedReduced()
+ * @param city
+ * @return a lambda function that takes a somNodes as argument and returns it wrapped with it's distance to city (which is specified here).
+ */
+std::function<DPoint (Point&)> SOM::mapperFactory(const Point& city) const{
+    return [=](Point& somNode){
+        DPoint wrappedSomNode;
+        wrappedSomNode.distance = city.distance(somNode);
+        wrappedSomNode.point = somNode;
+        return wrappedSomNode;
+    };
 }

@@ -7,6 +7,8 @@ class Cities : public AbstractMap
 
 public:
     Cities();
+
+    const QVector<Point> shuffle() const;
 };
 
 #endif // CITIES_H

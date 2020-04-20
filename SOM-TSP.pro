@@ -26,6 +26,7 @@ SOURCES += \
 HEADERS += \
     abstractMap.h \
     cities.h \
+    dPoint.h \
     point.h \
     som.h \
     tspsom.h
