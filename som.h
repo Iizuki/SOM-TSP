@@ -1,6 +1,7 @@
 #ifndef SOM_H
 #define SOM_H
 #include "abstractMap.h"
+#include "cities.h"
 
 class SOM : public AbstractMap
 {
@@ -9,6 +10,7 @@ public:
     void InitializeCircular(int numberOfNodes);
     QVector<double> getXaxis() const override;
     QVector<double> getYaxis() const override;
+    void train(const Cities &cities,int iterations);
 };
 
 #endif // SOM_H

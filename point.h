@@ -16,6 +16,7 @@ public:
     double getY() const;
 
     double distance(const Point& anotherPoint) const;
+    void move(const Point& anotherPoint, double percent);
 };
 
 #endif // POINT_H

@@ -40,3 +40,15 @@ QVector<double> SOM::getYaxis() const {
     axis.append(axis.first()); //Complete the loop by adding the first element as the last one also.
     return axis;
 }
+
+/**
+ * @brief SOM::train trains the som. Should never be run in UI-thread. Assumes that cities and som are initialized.
+ * @param iterations the number of training epocs to run.
+ * @param cities the map of cities that the SOM is trying to learn.
+ */
+void SOM::train(const Cities &cities, int iterations){
+    for (int i=0; i<iterations; i++){ //one loop iteration is also one training iteration.
+
+        //TODO
+    }
+}

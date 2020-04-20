@@ -2,6 +2,8 @@
 #include "ui_tspsom.h"
 #include <QVector>
 #include <QVariant>
+#include <QMessageBox>
+#include <QtConcurrent/QtConcurrent>
 
 TspSom::TspSom(QWidget *parent)
     : QMainWindow(parent)
@@ -77,4 +79,23 @@ void TspSom::initializeSOM_clicked()
 
     somCurve->setData(x, y);
     ui->graph_qcustomplot->replot();
+}
+
+
+/**
+ * @brief TspSom::trainClicked Qt slot that handless the "Train SOM" button click.
+ */
+void TspSom::trainClicked(){
+    //Show errormessage if citesMap or som isn't initialized.
+    if (citiesMap.getPoints().isEmpty() || som.getPoints().isEmpty()){
+        QMessageBox errorBox;
+        errorBox.setText("Map has to be generated and SOM need to be initialized before training!");
+        errorBox.setIcon(QMessageBox::Critical);
+        errorBox.exec();
+        return;
+    }
+    int iterations = ui->iterations_spinBox->value();
+
+    //Initiates the training process in another thread. The future object is not used here.
+    QFuture<void> future = QtConcurrent::run(&som, &SOM::train, &citiesMap, iterations);
 }
