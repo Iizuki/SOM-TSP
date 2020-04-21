@@ -17,6 +17,8 @@ public:
 
     double distance(const Point& anotherPoint) const;
     void move(const Point& anotherPoint, double percent);
+
+    friend bool operator== (Point &p1, const Point &p2);
 };
 
 #endif // POINT_H

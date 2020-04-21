@@ -2,6 +2,7 @@
 #include <cmath>
 #include <QtConcurrent/QtConcurrent>
 
+
 SOM::SOM()
 {
 
@@ -47,7 +48,9 @@ QVector<double> SOM::getYaxis() const {
  * @param iterations the number of training epocs to run.
  * @param cities the map of cities that the SOM is trying to learn.
  */
-void SOM::train(const Cities &cities, int iterations){
+void SOM::train(Cities &cities, int iterations){
+    double learningRate = INITIAL_LEARNING_RATE;
+
     for (int i=0; i<iterations; i++){ //one loop iteration is also one training iteration.
         //Step 1. Obtain a shuffled list of cities
         QVector<Point> shuffledCities = cities.shuffle();
@@ -55,12 +58,17 @@ void SOM::train(const Cities &cities, int iterations){
         //Step 2. Traverse through all cities
         for (const Point& city : shuffledCities){
             //Step 3. Find the closest SOM-node aka the BMU (best matching unit)
-            std::function<DPoint (Point&)> mapper = mapperFactory(city);
-            //REDUCER HERE
-            DPoint BMU = QtConcurrent::blockingMappedReduced();
+            //This step has no dependencies so it's computed parallel.
+            std::function<DPoint (const Point&)> mapper = mapperFactory(city);
+            DPoint BMU = QtConcurrent::blockingMappedReduced(points, mapper, SOM::reducer);
 
+            //Step 4. Move BMU and it's neigbouring SOM nodes towards the city
+            moveNodes(BMU.point, city, learningRate);
+
+            //Step 5. Reduce learning rate
+            learningRate = learningRate * INITIAL_LEARNING_RATE;
         }
-    }
+    } //Step 6. return to step 1. until all iterations are done
 }
 
 /**
@@ -68,11 +76,41 @@ void SOM::train(const Cities &cities, int iterations){
  * @param city
  * @return a lambda function that takes a somNodes as argument and returns it wrapped with it's distance to city (which is specified here).
  */
-std::function<DPoint (Point&)> SOM::mapperFactory(const Point& city) const{
-    return [=](Point& somNode){
+std::function<DPoint (const Point&)> SOM::mapperFactory(const Point& city){
+    return [=](const Point& somNode){
         DPoint wrappedSomNode;
-        wrappedSomNode.distance = city.distance(somNode);
+        wrappedSomNode.distance = somNode.distance(city);
         wrappedSomNode.point = somNode;
         return wrappedSomNode;
     };
+}
+
+/**
+ * @brief reducer function for mappedReduced. Selects the point with smaller distance.
+ * @param winner the reduce result
+ * @param competitor
+ */
+void SOM::reducer(DPoint &winner, const DPoint &competitor){
+    winner = winner.distance < competitor.distance ? winner : competitor;
+}
+
+/**
+ * @brief SOM::moveNodes updates the som once the BMU is found. Total of 9 points are moved, including BMU.
+ * @param BMU best matching unit
+ * @param city nodes will move towards this city
+ */
+void SOM::moveNodes(Point& BMU, const Point& city, double rate){
+    //Update BMU
+    BMU.move(city, rate);
+
+    //Find and update BMU neighbours
+    int BMU_index = points.indexOf(BMU);
+    int somLength = points.length();
+    for (int i=1; i<=4; i++){ //4 neighbours in each direction are updated.
+        int rightNeighbourIndex = (BMU_index + i) % somLength;
+        int leftNeighbourIndex = (somLength + ((BMU_index - i) % somLength)) % somLength; //python style modulus
+        double neighbourLeraningRate = rate * pow(NEIGHBOURHOOD_MULTIPLIER, i);
+        points[rightNeighbourIndex].move(city, neighbourLeraningRate);
+        points[leftNeighbourIndex].move(city, neighbourLeraningRate);
+    }
 }

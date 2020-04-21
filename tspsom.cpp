@@ -96,6 +96,11 @@ void TspSom::trainClicked(){
     }
     int iterations = ui->iterations_spinBox->value();
 
+    //Disable Ui buttons, while training is in progress
+    ui->generateMap_pushButton->setEnabled(false);
+    ui->initializeSOM_pushButton->setEnabled(false);
+    ui->trainSOM_pushButton->setEnabled(false);
+
     //Initiates the training process in another thread. The future object is not used here.
-    QFuture<void> future = QtConcurrent::run(&som, &SOM::train, &citiesMap, iterations);
+    QFuture<void> future = QtConcurrent::run(&som, &SOM::train, citiesMap, iterations);
 }

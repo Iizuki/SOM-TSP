@@ -87,3 +87,8 @@ void Point::move(const Point& anotherPoint, double percent){
         y = y - Yupdate;
     }
 }
+
+
+bool operator== (Point &p1, const Point &p2){
+    return (p1.getX() == p2.getX() && p1.getY() == p2.getY());
+}
