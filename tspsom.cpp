@@ -35,6 +35,11 @@ TspSom::TspSom(QWidget *parent)
     //Populate combobox
     ui->initialization_comboBox->addItem("Circular", QVariant(true));
     ui->initialization_comboBox->addItem("Random", QVariant(false));
+
+    //Connect qt signals and slots (more connections are formed in the uic)
+    QObject::connect(&som, SIGNAL(trainingIterationDone()), this, SLOT(updatePlot()));
+    QObject::connect(&som, SIGNAL(trainingDone(bool)), this, SLOT(enableButtons(bool)));
+
 }
 
 TspSom::~TspSom()
@@ -74,11 +79,7 @@ void TspSom::initializeSOM_clicked()
         som.InitializeCircular(nodes);
     }
 
-    QVector<double> x = som.getXaxis();
-    QVector<double> y = som.getYaxis();
-
-    somCurve->setData(x, y);
-    ui->graph_qcustomplot->replot();
+    updatePlot();
 }
 
 
@@ -97,10 +98,30 @@ void TspSom::trainClicked(){
     int iterations = ui->iterations_spinBox->value();
 
     //Disable Ui buttons, while training is in progress
-    ui->generateMap_pushButton->setEnabled(false);
-    ui->initializeSOM_pushButton->setEnabled(false);
-    ui->trainSOM_pushButton->setEnabled(false);
+    enableButtons(false);
 
     //Initiates the training process in another thread. The future object is not used here.
     QFuture<void> future = QtConcurrent::run(&som, &SOM::train, citiesMap, iterations);
 }
+
+/**
+ * @brief updatePlot is a slot that updates the plot in UI
+ */
+void TspSom::updatePlot(){
+    QVector<double> x = som.getXaxis();
+    QVector<double> y = som.getYaxis();
+
+    somCurve->setData(x, y);
+    ui->graph_qcustomplot->replot();
+}
+
+/**
+ * @brief TspSom::enableButtons slot that sets the enabled status of buttons.
+ * @param b
+ */
+void TspSom::enableButtons(bool b){
+    ui->generateMap_pushButton->setEnabled(b);
+    ui->initializeSOM_pushButton->setEnabled(b);
+    ui->trainSOM_pushButton->setEnabled(b);
+}
+

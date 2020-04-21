@@ -9,6 +9,7 @@
 struct DPoint{
     Point point;
     double distance;
+    bool wanted;
 };
 
 #endif // DPOINT_H

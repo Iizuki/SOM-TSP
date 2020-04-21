@@ -64,11 +64,12 @@ void SOM::train(Cities &cities, int iterations){
 
             //Step 4. Move BMU and it's neigbouring SOM nodes towards the city
             moveNodes(BMU.point, city, learningRate);
-
-            //Step 5. Reduce learning rate
-            learningRate = learningRate * INITIAL_LEARNING_RATE;
         }
+        //Step 5. Reduce learning rate
+        learningRate = learningRate * INITIAL_LEARNING_RATE;
+        emit trainingIterationDone();
     } //Step 6. return to step 1. until all iterations are done
+    emit trainingDone(true);
 }
 
 /**
@@ -81,6 +82,7 @@ std::function<DPoint (const Point&)> SOM::mapperFactory(const Point& city){
         DPoint wrappedSomNode;
         wrappedSomNode.distance = somNode.distance(city);
         wrappedSomNode.point = somNode;
+        wrappedSomNode.wanted = true;
         return wrappedSomNode;
     };
 }
@@ -91,7 +93,11 @@ std::function<DPoint (const Point&)> SOM::mapperFactory(const Point& city){
  * @param competitor
  */
 void SOM::reducer(DPoint &winner, const DPoint &competitor){
-    winner = winner.distance < competitor.distance ? winner : competitor;
+    if (winner.wanted == false){
+        winner = competitor;
+    } else{
+        winner = winner.distance < competitor.distance ? winner : competitor;
+    }
 }
 
 /**
@@ -100,12 +106,10 @@ void SOM::reducer(DPoint &winner, const DPoint &competitor){
  * @param city nodes will move towards this city
  */
 void SOM::moveNodes(Point& BMU, const Point& city, double rate){
-    //Update BMU
-    BMU.move(city, rate);
-
     //Find and update BMU neighbours
     int BMU_index = points.indexOf(BMU);
     int somLength = points.length();
+    //points[BMU_index].move(city, rate);
     for (int i=1; i<=4; i++){ //4 neighbours in each direction are updated.
         int rightNeighbourIndex = (BMU_index + i) % somLength;
         int leftNeighbourIndex = (somLength + ((BMU_index - i) % somLength)) % somLength; //python style modulus
