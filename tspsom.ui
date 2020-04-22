@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>TspSom</string>
+   <string>Traveling Salesman SOM</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -47,22 +47,21 @@
          <property name="title">
           <string>Map</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="cities_spinBox">
-            <property name="minimum">
-             <number>3</number>
-            </property>
-            <property name="maximum">
-             <number>1000</number>
-            </property>
-            <property name="value">
-             <number>100</number>
-            </property>
-           </widget>
-          </item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <property name="formAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="cities_label">
+            <property name="minimumSize">
+             <size>
+              <width>75</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Cities</string>
             </property>
@@ -75,6 +74,19 @@
            <widget class="QPushButton" name="generateMap_pushButton">
             <property name="text">
              <string>Generate map</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="cities_spinBox">
+            <property name="minimum">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <number>1001</number>
+            </property>
+            <property name="value">
+             <number>50</number>
             </property>
            </widget>
           </item>
@@ -100,13 +112,13 @@
           <item row="0" column="1">
            <widget class="QSpinBox" name="nodes_spinBox">
             <property name="minimum">
-             <number>1</number>
+             <number>10</number>
             </property>
             <property name="maximum">
              <number>10000</number>
             </property>
             <property name="value">
-             <number>500</number>
+             <number>200</number>
             </property>
            </widget>
           </item>
@@ -145,10 +157,25 @@
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
           </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="formAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="iterations_label">
+            <property name="minimumSize">
+             <size>
+              <width>75</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Iterations</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -161,35 +188,14 @@
              <number>10000</number>
             </property>
             <property name="value">
-             <number>100</number>
+             <number>1000</number>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="1" column="0" colspan="2">
            <widget class="QPushButton" name="trainSOM_pushButton">
             <property name="text">
              <string>Train SOM</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="abortSOM_pushButton">
-            <property name="text">
-             <string>Abort</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="bruteForce_pushButton">
-            <property name="text">
-             <string>Brute force</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="bruteForceAbort_pushButton">
-            <property name="text">
-             <string>Abort</string>
             </property>
            </widget>
           </item>
@@ -240,8 +246,8 @@
    <slot>generateMapClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>89</x>
-     <y>173</y>
+     <x>111</x>
+     <y>149</y>
     </hint>
     <hint type="destinationlabel">
      <x>142</x>
@@ -265,9 +271,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>trainSOM_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TspSom</receiver>
+   <slot>trainClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>140</x>
+     <y>626</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>generateMapClicked()</slot>
   <slot>initializeSOM_clicked()</slot>
+  <slot>trainClicked()</slot>
  </slots>
 </ui>

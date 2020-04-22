@@ -26,12 +26,15 @@ SOURCES += \
 HEADERS += \
     abstractMap.h \
     cities.h \
+    dPoint.h \
     point.h \
     som.h \
     tspsom.h
 
 FORMS += \
     tspsom.ui
+
+LIBS += -lQt5Concurrent
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -23,8 +23,10 @@ public slots:
 
 private slots:
     void generateMapClicked();
-
     void initializeSOM_clicked();
+    void trainClicked();
+    void updatePlot();
+    void enableButtons(bool b);
 
 private:
     Ui::TspSom *ui;

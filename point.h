@@ -12,8 +12,13 @@ public:
     Point(double x, double y);
     Point();
 
-    double getX();
-    double getY();
+    double getX() const;
+    double getY() const;
+
+    double distance(const Point& anotherPoint) const;
+    void move(const Point& anotherPoint, double percent);
+
+    friend bool operator== (Point &p1, const Point &p2);
 };
 
 #endif // POINT_H
