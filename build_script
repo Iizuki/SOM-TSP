@@ -2,5 +2,5 @@
 # Builds the SOM-TSP qt project
 mkdir build
 cd build
-qmake SOM-TSP.pro
+qmake ../SOM-TSP.pro
 make
