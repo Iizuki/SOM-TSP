@@ -1,0 +1,6 @@
+#!/bin/bash
+# Builds the SOM-TSP qt project
+mkdir build
+cd build
+qmake SOM-TSP.pro
+make
