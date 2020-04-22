@@ -6,7 +6,7 @@
 #include <QObject>
 
 //These values are hyperparameters for the SOM training algorithm
-#define INITIAL_LEARNING_RATE 0.999
+#define INITIAL_LEARNING_RATE 0.9995
 #define NEIGHBOURHOOD_MULTIPLIER 0.1
 
 class SOM : public QObject, public AbstractMap
